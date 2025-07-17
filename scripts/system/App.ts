@@ -20,6 +20,7 @@ export class App {
     });
 
     container.appendChild(this.pixi.canvas);
+    this.pixi.canvas.classList.add('pixi-canvas');
 
     // Stats
     const stats = new Stats();
@@ -37,7 +38,7 @@ export class App {
 
     Loader.load(config.loader, () => {
       ScenesManager.init(this.pixi, config.scenes);
-      ScenesManager.start('Game');
+      ScenesManager.start('Menu');
     });
   }
 
