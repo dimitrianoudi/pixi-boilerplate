@@ -3,9 +3,11 @@ import { resolve } from 'path';
 
 export default defineConfig({
   root: '.',
+  base: '/games/softgames/',
   publicDir: 'sprites',
   build: {
     outDir: 'dist',
+    assetsDir: 'assets',
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html')
@@ -17,4 +19,4 @@ export default defineConfig({
       '@': resolve(__dirname, 'scripts')
     }
   }
-});
+}); 
