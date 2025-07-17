@@ -1,5 +1,6 @@
 import { Scene } from '../system/Scene';
-import { Sprite, Texture } from 'pixi.js';
+import { Sprite, Texture, Text, TextStyle, Container } from 'pixi.js';
+import { ScenesManager } from '../system/SceneManager';
 
 interface Particle {
   sprite: Sprite;
@@ -15,6 +16,52 @@ export class PhoenixFlame extends Scene {
 
   init(): void {
     this.texture = Texture.from('flame.png');
+
+    const backStyle = new TextStyle({ 
+      fontSize: 18, 
+      fill: '#000000',
+      fontWeight: 'normal'
+    });
+    const backText = new Text({ text: '← Menu', style: backStyle });
+    backText.interactive = true;
+    backText.cursor = 'pointer';
+    
+    const buttonContainer = new Container();
+    buttonContainer.width = backText.width + 16;
+    buttonContainer.height = backText.height + 8;
+    buttonContainer.x = window.innerWidth - buttonContainer.width - 20;
+    buttonContainer.y = 20;
+    buttonContainer.interactive = true;
+    buttonContainer.cursor = 'pointer';
+    
+    buttonContainer.addChild(backText);
+    backText.x = -60;
+    backText.y = 60;
+    
+    buttonContainer.on('pointerover', () => {
+      const newStyle = new TextStyle({ 
+        fontSize: 18, 
+        fill: '#ffffff',
+        fontWeight: 'normal'
+      });
+      backText.style = newStyle;
+      window.document.body.style.cursor = 'pointer';
+    });
+    buttonContainer.on('pointerout', () => {
+      const newStyle = new TextStyle({ 
+        fontSize: 18, 
+        fill: '#000000',
+        fontWeight: 'normal'
+      });
+      backText.style = newStyle;
+      window.document.body.style.cursor = 'default';
+    });
+    
+    buttonContainer.on('pointerdown', () => {
+      ScenesManager.start('Menu');
+    });
+    
+    this.addChild(buttonContainer);
   }
 
   update(delta: number): void {

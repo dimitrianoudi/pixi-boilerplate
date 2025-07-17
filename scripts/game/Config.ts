@@ -1,13 +1,13 @@
 
 import { Menu } from './Menu';
-import { Game } from './Game';
+import { AceOfShadows } from './AceOfShadows';
 import { PhoenixFlame } from './PhoenixFlame';
 import { Tools } from '../system/Tools';
 
 export const Config = {
   loader: Tools.massiveRequire(),
   scenes: {
-    Game,
+    AceOfShadows,
     PhoenixFlame,
     Menu
   }

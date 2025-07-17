@@ -1,5 +1,6 @@
 import { Scene } from '../system/Scene';
-import { Sprite, Texture } from 'pixi.js';
+import { Sprite, Texture, Text, TextStyle, Container } from 'pixi.js';
+import { ScenesManager } from '../system/SceneManager';
 
 interface Animation {
   sprite: Sprite;
@@ -11,13 +12,60 @@ interface Animation {
   duration: number;
 }
 
-export class Game extends Scene {
+export class AceOfShadows extends Scene {
   private cards: Sprite[] = [];
   private animations: Animation[] = [];
   private frameCounter = 0;
   private stacks: { x: number; y: number; count: number }[] = [];
 
   init(): void {
+
+    const backStyle = new TextStyle({ 
+      fontSize: 18, 
+      fill: '#000000',
+      fontWeight: 'normal'
+    });
+    const backText = new Text({ text: '← Menu', style: backStyle });
+    backText.interactive = true;
+    backText.cursor = 'pointer';
+    
+    const buttonContainer = new Container();
+    buttonContainer.width = backText.width + 16;
+    buttonContainer.height = backText.height + 8;
+    buttonContainer.x = window.innerWidth - buttonContainer.width - 20;
+    buttonContainer.y = 20;
+    buttonContainer.interactive = true;
+    buttonContainer.cursor = 'pointer';
+    
+    buttonContainer.addChild(backText);
+    backText.x = -60;
+    backText.y = 60;
+    
+    buttonContainer.on('pointerover', () => {
+      const newStyle = new TextStyle({ 
+        fontSize: 18, 
+        fill: '#ffffff',
+        fontWeight: 'normal'
+      });
+      backText.style = newStyle;
+      window.document.body.style.cursor = 'pointer';
+    });
+    buttonContainer.on('pointerout', () => {
+      const newStyle = new TextStyle({ 
+        fontSize: 18, 
+        fill: '#000000',
+        fontWeight: 'normal'
+      });
+      backText.style = newStyle;
+      window.document.body.style.cursor = 'default';
+    });
+    
+    buttonContainer.on('pointerdown', () => {
+      console.log('Back button clicked!');
+      ScenesManager.start('Menu');
+    });
+    
+    this.addChild(buttonContainer);
 
     const width = window.innerWidth;
     const height = window.innerHeight;

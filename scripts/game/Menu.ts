@@ -4,7 +4,7 @@ import { ScenesManager } from '../system/SceneManager';
 
 export class Menu extends Scene {
   private options: { label: string; scene: string }[] = [
-    { label: 'Ace of Shadows', scene: 'Game' },
+    { label: 'Ace of Shadows', scene: 'AceOfShadows' },
     { label: 'Phoenix Flame', scene: 'PhoenixFlame' }
   ];
   private container!: Container;
@@ -24,10 +24,8 @@ export class Menu extends Scene {
     this.options.forEach((opt, i) => {
       const txt = new Text({ text: opt.label, style });
       txt.interactive = true;
-      // center horizontally
       txt.x = width / 2 - txt.width / 2;
       txt.y = startY + i * lineHeight;
-      // hover effects
       txt.on('pointerover', () => {
         const newStyle = new TextStyle({ fontSize: 32, fill: '#000000' });
         txt.style = newStyle;
